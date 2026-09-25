@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PrihlasenieRouteImport } from './routes/prihlasenie'
+import { Route as RegistraciaRouteImport } from './routes/registracia'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrihlasenieRoute = PrihlasenieRouteImport.update({
+  id: '/prihlasenie',
+  path: '/prihlasenie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistraciaRoute = RegistraciaRouteImport.update({
+  id: '/registracia',
+  path: '/registracia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/prihlasenie': typeof PrihlasenieRoute
+  '/registracia': typeof RegistraciaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/prihlasenie': typeof PrihlasenieRoute
+  '/registracia': typeof RegistraciaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/prihlasenie': typeof PrihlasenieRoute
+  '/registracia': typeof RegistraciaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/prihlasenie' | '/registracia'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/prihlasenie' | '/registracia'
+  id: '__root__' | '/' | '/prihlasenie' | '/registracia'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PrihlasenieRoute: typeof PrihlasenieRoute
+  RegistraciaRoute: typeof RegistraciaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prihlasenie': {
+      id: '/prihlasenie'
+      path: '/prihlasenie'
+      fullPath: '/prihlasenie'
+      preLoaderRoute: typeof PrihlasenieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registracia': {
+      id: '/registracia'
+      path: '/registracia'
+      fullPath: '/registracia'
+      preLoaderRoute: typeof RegistraciaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PrihlasenieRoute: PrihlasenieRoute,
+  RegistraciaRoute: RegistraciaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

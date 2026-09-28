@@ -67,9 +67,9 @@ function Feed() {
       {todays.map((w) => (
         <section
           key={w.id}
-          className="mx-auto flex h-full max-w-md snap-start snap-always flex-col px-4 pt-14 pb-4"
+          className="mx-auto flex h-full max-w-md snap-start snap-always flex-col justify-center px-4 pt-10 pb-4"
         >
-          <WordCard word={w} className="flex-1 justify-center" />
+          <WordCard word={w} className="w-full" />
         </section>
       ))}
       <section className="mx-auto flex h-full max-w-md snap-start flex-col items-center justify-center px-6 text-center">

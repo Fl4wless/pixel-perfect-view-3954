@@ -81,12 +81,13 @@ export function ActionButton({
   );
 }
 
-export function WordCard({ word }: { word: Word }) {
+export function WordCard({ word, className }: { word: Word; className?: string }) {
   const { liked, saved, toggleLike, toggleSave } = useStore();
   const category = categoryBySlug(word.category);
 
   return (
-    <article className="surface animate-rise flex flex-col gap-5 p-6">
+    <article className={cn("surface animate-rise flex flex-col gap-5 p-6", className)}>
+
       <Link
         to="/app/kategorie/$slug"
         params={{ slug: word.category }}
@@ -116,7 +117,7 @@ export function WordCard({ word }: { word: Word }) {
         </div>
       </div>
 
-      <div className="flex gap-3">
+      <div className="mt-auto flex gap-3">
         <ActionButton
           active={liked.includes(word.id)}
           onClick={() => toggleLike(word.id)}

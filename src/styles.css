@@ -143,3 +143,7 @@
 @utility animate-rise {
   animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+@utility feed-viewport {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 4.25rem);
+}

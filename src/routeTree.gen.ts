@@ -15,6 +15,13 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PrihlasenieRouteImport } from './routes/prihlasenie'
 import { Route as RegistraciaRouteImport } from './routes/registracia'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppKategorieRouteImport } from './routes/app.kategorie'
+import { Route as AppNotifikacieRouteImport } from './routes/app.notifikacie'
+import { Route as AppProfilRouteImport } from './routes/app.profil'
+import { Route as AppUlozeneRouteImport } from './routes/app.ulozene'
+import { Route as AppKategorieIndexRouteImport } from './routes/app.kategorie.index'
+import { Route as AppKategorieSlugRouteImport } from './routes/app.kategorie.$slug'
+import { Route as AppSlovoIdRouteImport } from './routes/app.slovo.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +53,41 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppKategorieRoute = AppKategorieRouteImport.update({
+  id: '/kategorie',
+  path: '/kategorie',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotifikacieRoute = AppNotifikacieRouteImport.update({
+  id: '/notifikacie',
+  path: '/notifikacie',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfilRoute = AppProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppUlozeneRoute = AppUlozeneRouteImport.update({
+  id: '/ulozene',
+  path: '/ulozene',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppKategorieIndexRoute = AppKategorieIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppKategorieRoute,
+} as any)
+const AppKategorieSlugRoute = AppKategorieSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => AppKategorieRoute,
+} as any)
+const AppSlovoIdRoute = AppSlovoIdRouteImport.update({
+  id: '/slovo/$id',
+  path: '/slovo/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,14 +95,27 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/prihlasenie': typeof PrihlasenieRoute
   '/registracia': typeof RegistraciaRoute
+  '/app/kategorie': typeof AppKategorieRouteWithChildren
+  '/app/notifikacie': typeof AppNotifikacieRoute
+  '/app/profil': typeof AppProfilRoute
+  '/app/ulozene': typeof AppUlozeneRoute
   '/app/': typeof AppIndexRoute
+  '/app/kategorie/$slug': typeof AppKategorieSlugRoute
+  '/app/slovo/$id': typeof AppSlovoIdRoute
+  '/app/kategorie/': typeof AppKategorieIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/prihlasenie': typeof PrihlasenieRoute
   '/registracia': typeof RegistraciaRoute
+  '/app/notifikacie': typeof AppNotifikacieRoute
+  '/app/profil': typeof AppProfilRoute
+  '/app/ulozene': typeof AppUlozeneRoute
   '/app': typeof AppIndexRoute
+  '/app/kategorie/$slug': typeof AppKategorieSlugRoute
+  '/app/slovo/$id': typeof AppSlovoIdRoute
+  '/app/kategorie': typeof AppKategorieIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,14 +124,44 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/prihlasenie': typeof PrihlasenieRoute
   '/registracia': typeof RegistraciaRoute
+  '/app/kategorie': typeof AppKategorieRouteWithChildren
+  '/app/notifikacie': typeof AppNotifikacieRoute
+  '/app/profil': typeof AppProfilRoute
+  '/app/ulozene': typeof AppUlozeneRoute
   '/app/': typeof AppIndexRoute
+  '/app/kategorie/$slug': typeof AppKategorieSlugRoute
+  '/app/slovo/$id': typeof AppSlovoIdRoute
+  '/app/kategorie/': typeof AppKategorieIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/app' | '/onboarding' | '/prihlasenie' | '/registracia' | '/app/'
+    | '/'
+    | '/app'
+    | '/onboarding'
+    | '/prihlasenie'
+    | '/registracia'
+    | '/app/kategorie'
+    | '/app/notifikacie'
+    | '/app/profil'
+    | '/app/ulozene'
+    | '/app/'
+    | '/app/kategorie/$slug'
+    | '/app/slovo/$id'
+    | '/app/kategorie/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/onboarding' | '/prihlasenie' | '/registracia' | '/app'
+  to:
+    | '/'
+    | '/onboarding'
+    | '/prihlasenie'
+    | '/registracia'
+    | '/app/notifikacie'
+    | '/app/profil'
+    | '/app/ulozene'
+    | '/app'
+    | '/app/kategorie/$slug'
+    | '/app/slovo/$id'
+    | '/app/kategorie'
   id:
     | '__root__'
     | '/'
@@ -84,7 +169,14 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/prihlasenie'
     | '/registracia'
+    | '/app/kategorie'
+    | '/app/notifikacie'
+    | '/app/profil'
+    | '/app/ulozene'
     | '/app/'
+    | '/app/kategorie/$slug'
+    | '/app/slovo/$id'
+    | '/app/kategorie/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -139,15 +231,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/kategorie': {
+      id: '/app/kategorie'
+      path: '/kategorie'
+      fullPath: '/app/kategorie'
+      preLoaderRoute: typeof AppKategorieRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/notifikacie': {
+      id: '/app/notifikacie'
+      path: '/notifikacie'
+      fullPath: '/app/notifikacie'
+      preLoaderRoute: typeof AppNotifikacieRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/profil': {
+      id: '/app/profil'
+      path: '/profil'
+      fullPath: '/app/profil'
+      preLoaderRoute: typeof AppProfilRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/ulozene': {
+      id: '/app/ulozene'
+      path: '/ulozene'
+      fullPath: '/app/ulozene'
+      preLoaderRoute: typeof AppUlozeneRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/kategorie/': {
+      id: '/app/kategorie/'
+      path: '/'
+      fullPath: '/app/kategorie/'
+      preLoaderRoute: typeof AppKategorieIndexRouteImport
+      parentRoute: typeof AppKategorieRoute
+    }
+    '/app/kategorie/$slug': {
+      id: '/app/kategorie/$slug'
+      path: '/$slug'
+      fullPath: '/app/kategorie/$slug'
+      preLoaderRoute: typeof AppKategorieSlugRouteImport
+      parentRoute: typeof AppKategorieRoute
+    }
+    '/app/slovo/$id': {
+      id: '/app/slovo/$id'
+      path: '/slovo/$id'
+      fullPath: '/app/slovo/$id'
+      preLoaderRoute: typeof AppSlovoIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppKategorieRouteChildren {
+  AppKategorieSlugRoute: typeof AppKategorieSlugRoute
+  AppKategorieIndexRoute: typeof AppKategorieIndexRoute
+}
+
+const AppKategorieRouteChildren: AppKategorieRouteChildren = {
+  AppKategorieSlugRoute: AppKategorieSlugRoute,
+  AppKategorieIndexRoute: AppKategorieIndexRoute,
+}
+
+const AppKategorieRouteWithChildren = AppKategorieRoute._addFileChildren(
+  AppKategorieRouteChildren,
+)
+
 interface AppRouteChildren {
+  AppKategorieRoute: typeof AppKategorieRouteWithChildren
+  AppNotifikacieRoute: typeof AppNotifikacieRoute
+  AppProfilRoute: typeof AppProfilRoute
+  AppUlozeneRoute: typeof AppUlozeneRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppSlovoIdRoute: typeof AppSlovoIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppKategorieRoute: AppKategorieRouteWithChildren,
+  AppNotifikacieRoute: AppNotifikacieRoute,
+  AppProfilRoute: AppProfilRoute,
+  AppUlozeneRoute: AppUlozeneRoute,
   AppIndexRoute: AppIndexRoute,
+  AppSlovoIdRoute: AppSlovoIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

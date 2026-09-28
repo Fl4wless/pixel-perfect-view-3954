@@ -30,7 +30,7 @@ export function Field({
   error,
   className,
   ...props
-}: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string; error?: string }) {
+}: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string | undefined; error?: string | undefined }) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-sm font-medium text-muted-foreground">{label}</span>
@@ -56,7 +56,7 @@ export function Tag({
   active,
   children,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { active?: boolean }) {
+}: ButtonHTMLAttributes<HTMLButtonElement> & { active?: boolean | undefined }) {
   return (
     <button
       {...props}
@@ -74,7 +74,7 @@ export function Tag({
   );
 }
 
-export function Card({ className, children }: { className?: string; children: ReactNode }) {
+export function Card({ className, children }: { className?: string | undefined; children: ReactNode }) {
   return <div className={cn("surface p-5", className)}>{children}</div>;
 }
 
@@ -85,9 +85,9 @@ export function Screen({
   action,
 }: {
   title: string;
-  subtitle?: string;
+  subtitle?: string | undefined;
   children: ReactNode;
-  action?: ReactNode;
+  action?: ReactNode | undefined;
 }) {
   return (
     <div className="mx-auto w-full max-w-md px-5 pb-8">
@@ -126,6 +126,6 @@ export function EmptyState({
   );
 }
 
-export function Skeleton({ className }: { className?: string }) {
+export function Skeleton({ className }: { className?: string | undefined }) {
   return <div className={cn("animate-pulse rounded-2xl bg-secondary", className)} />;
 }

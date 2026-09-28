@@ -4,7 +4,7 @@ import { categoryBySlug, type Word } from "@/lib/words";
 import { speak, useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export function SpeakButton({ word, label }: { word: string; label?: string }) {
+export function SpeakButton({ word, label }: { word: string; label?: string | undefined }) {
   return (
     <button
       onClick={() => speak(word)}
@@ -81,7 +81,7 @@ export function ActionButton({
   );
 }
 
-export function WordCard({ word, className }: { word: Word; className?: string }) {
+export function WordCard({ word, className }: { word: Word; className?: string | undefined }) {
   const { liked, saved, toggleLike, toggleSave } = useStore();
   const category = categoryBySlug(word.category);
 

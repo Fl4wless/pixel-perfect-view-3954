@@ -18,7 +18,7 @@ export function SpeakButton({ word, label }: { word: string; label?: string | un
 }
 
 export function HighlightedExample({ sentence, word }: { sentence: string; word: string }) {
-  const base = word.split(" ")[0];
+  const base = word.split(" ")[0] ?? word;
   const parts = sentence.split(new RegExp(`(${base}\\w*)`, "gi"));
   return (
     <p className="text-[1.05rem] leading-relaxed text-foreground/85">
@@ -113,7 +113,7 @@ export function WordCard({ word, className }: { word: Word; className?: string |
         </span>
         <p className="text-[1.05rem] leading-relaxed">{word.definition}</p>
         <div className="border-l-2 border-primary/30 pl-4">
-          <HighlightedExample sentence={word.examples[0]} word={word.word} />
+          <HighlightedExample sentence={word.examples[0] ?? ""} word={word.word} />
         </div>
       </div>
 

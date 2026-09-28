@@ -4,7 +4,7 @@ import { categoryBySlug, type Word } from "@/lib/words";
 import { speak, useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export function SpeakButton({ word, label }: { word: string; label?: string }) {
+export function SpeakButton({ word, label }: { word: string; label?: string | undefined }) {
   return (
     <button
       onClick={() => speak(word)}
@@ -18,7 +18,7 @@ export function SpeakButton({ word, label }: { word: string; label?: string }) {
 }
 
 export function HighlightedExample({ sentence, word }: { sentence: string; word: string }) {
-  const base = word.split(" ")[0];
+  const base = word.split(" ")[0] ?? word;
   const parts = sentence.split(new RegExp(`(${base}\\w*)`, "gi"));
   return (
     <p className="text-[1.05rem] leading-relaxed text-foreground/85">
@@ -81,12 +81,13 @@ export function ActionButton({
   );
 }
 
-export function WordCard({ word }: { word: Word }) {
+export function WordCard({ word, className }: { word: Word; className?: string | undefined }) {
   const { liked, saved, toggleLike, toggleSave } = useStore();
   const category = categoryBySlug(word.category);
 
   return (
-    <article className="surface animate-rise flex flex-col gap-5 p-6">
+    <article className={cn("surface animate-rise flex flex-col gap-5 p-6", className)}>
+
       <Link
         to="/app/kategorie/$slug"
         params={{ slug: word.category }}
@@ -112,11 +113,11 @@ export function WordCard({ word }: { word: Word }) {
         </span>
         <p className="text-[1.05rem] leading-relaxed">{word.definition}</p>
         <div className="border-l-2 border-primary/30 pl-4">
-          <HighlightedExample sentence={word.examples[0]} word={word.word} />
+          <HighlightedExample sentence={word.examples[0] ?? ""} word={word.word} />
         </div>
       </div>
 
-      <div className="flex gap-3">
+      <div className="mt-auto flex gap-3">
         <ActionButton
           active={liked.includes(word.id)}
           onClick={() => toggleLike(word.id)}

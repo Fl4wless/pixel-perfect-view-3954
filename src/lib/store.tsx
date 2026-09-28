@@ -144,7 +144,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const i = list.indexOf(id);
       const j = i + direction;
       if (i < 0 || j < 0 || j >= list.length) return s;
-      [list[i], list[j]] = [list[j], list[i]];
+      const tmp = list[i]!; list[i] = list[j]!; list[j] = tmp;
       return { ...s, saved: list };
     });
   }, []);
